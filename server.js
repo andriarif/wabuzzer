@@ -4,12 +4,15 @@ import axios from "axios";
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// 🔑 TOKEN (PASTE PUNYA KAMU DI SINI)
 const TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOiIxNzc2MzkxNjYyIiwibmJmIjoiMTc3NjM5MTY2MiIsImV4cCI6IjE3NzYzOTM0NjIiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL2V4cGlyYXRpb24iOiI0LzE3LzIwMjYgOTozNzo0MiBBTSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFjY2Vzc19Ub2tlbiIsIlVzZXJJZCI6IjEwOTY4NjMiLCJVc2VyTmFtZSI6IjYyODk1NDE0MzcwMTYyIiwiVXNlclBob3RvIjoiOSIsIk5pY2tOYW1lIjoiQW5kcmlwZWRpYSIsIkFtb3VudCI6IjMwLjQwIiwiSW50ZWdyYWwiOiIwIiwiTG9naW5NYXJrIjoiSDUiLCJMb2dpblRpbWUiOiI0LzE3LzIwMjYgOTowNzo0MiBBTSIsIkxvZ2luSVBBZGRyZXNzIjoiMTgyLjkuNDguMTciLCJEYk51bWJlciI6IjAiLCJJc3ZhbGlkYXRvciI6IjAiLCJLZXlDb2RlIjoiMjk2Mi","91EPU3PeGuLae4ScgcPdaLqEdMzfRpurT0Djsf9TW5c";
 
+// 🟢 ROUTE TEST
 app.get("/", (req, res) => {
   res.send("SERVER WABUZZER AKTIF 🚀");
 });
 
+// 🔥 API UTAMA
 app.get("/api/prediksi", async (req, res) => {
   try {
     const response = await axios.post(
@@ -28,12 +31,27 @@ app.get("/api/prediksi", async (req, res) => {
     );
 
     res.json(response.data);
+
   } catch (err) {
-    console.log(err.message);
-    res.status(500).json({ error: err.message });
+    console.log("ERROR API:", err.response?.data || err.message);
+
+    res.json({
+      status: "error",
+      message: err.response?.data || err.message
+    });
   }
 });
 
+// 🛡️ ANTI CRASH GLOBAL
+process.on("uncaughtException", (err) => {
+  console.log("UNCAUGHT ERROR:", err.message);
+});
+
+process.on("unhandledRejection", (err) => {
+  console.log("UNHANDLED REJECTION:", err);
+});
+
+// 🚀 START SERVER
 app.listen(PORT, () => {
-  console.log("Server running on port " + PORT);
+  console.log(Server jalan di port ${PORT});
 });
