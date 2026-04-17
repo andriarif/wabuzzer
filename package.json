@@ -1,14 +1,14 @@
 {
-  "name": "signal-bot",
+  "name": "wabuzzer",
   "version": "1.0.0",
   "description": "Auto signal 55five",
   "main": "server.js",
-  "type": "module",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
     "express": "^4.18.2",
-    "node-fetch": "^3.3.2"
+    "axios": "^1.6.0",
+    "cors": "^2.8.5"
   }
 }
