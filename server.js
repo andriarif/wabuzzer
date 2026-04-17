@@ -1,4 +1,5 @@
 import express from "express";
+import axios from "axios";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -11,22 +12,24 @@ app.get("/", (req, res) => {
 
 app.get("/api/prediksi", async (req, res) => {
   try {
-    const response = await fetch("https://api.55fiveapi.com/api/webapi/GetGameIssue", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": TOKEN
-      },
-      body: JSON.stringify({
+    const response = await axios.post(
+      "https://api.55fiveapi.com/api/webapi/GetGameIssue",
+      {
         typeId: 30,
         language: 1,
         random: Math.random().toString(36).substring(2)
-      })
-    });
+      },
+      {
+        headers: {
+          Authorization: TOKEN,
+          "Content-Type": "application/json"
+        }
+      }
+    );
 
-    const data = await response.json();
-    res.json(data);
+    res.json(response.data);
   } catch (err) {
+    console.log(err.message);
     res.status(500).json({ error: err.message });
   }
 });
